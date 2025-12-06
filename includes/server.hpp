@@ -2,6 +2,15 @@
 #include <sys/epoll.h>
 #include <vector>
 
+/**
+ * @file server.hpp
+ * @brief Server configuration and creation using sockets and epoll.
+ *
+ * @details
+ * Provides configuration structures for sockets and web servers,
+ * as well as the @ref Server class for creating, configuring and managing a web server using Epoll.
+ */
+
 /** @brief Configuration for the server sockets. */
 struct SocketConfig
 {
@@ -20,6 +29,19 @@ struct ServerConfig
 	std::vector<int> ports = {8080}; /**< @brief Specifies on which ports the server will listen to. */
 };
 
+/**
+ * @brief Web server class.
+ *
+ * @details
+ * Initiates, creates and manages a web server. It uses Epoll for communication and is non-blocking.
+ * Handles all needed resources and manages their lifetime and cleanup.
+ * Manages client connecting and disconnecting as well as any client errors or inactivity.
+ * 
+ * Typical usage:
+ * - Create a server by instantiating it with a @ref ServerConfig.
+ * - Start the server by using the @ref Start() function.
+ * - Destroy resources with @ref Destroy() when no longer needed. (Also handled automatically.)
+ */
 class Server
 {
 	private:
@@ -77,7 +99,7 @@ class Server
 		 * @param serverConfig The configuration for the server.
 		 */
 		Server(const ServerConfig& serverConfig);
-		
+
 		~Server();
 
 		void Destroy(); /**< @brief Destroys and closes the server. All server and associated resources are cleaned up. */
